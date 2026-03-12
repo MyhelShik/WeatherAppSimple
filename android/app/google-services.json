@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "567509991377",
+    "project_id": "weatherfreeapp",
+    "storage_bucket": "weatherfreeapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567509991377:android:469719597ad3d0d0a06af0",
+        "android_client_info": {
+          "package_name": "com.example.weatherfreeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "567509991377-75joqgoufmd0b99je4pqo1kskfsduc99.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weatherfreeapp",
+            "certificate_hash": "73a9588c3c62f39352b861efa6ccbe5bedef3536"
+          }
+        },
+        {
+          "client_id": "567509991377-ajpi8bevi1pe7ovvj3127faih3gp3nd8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weatherfreeapp",
+            "certificate_hash": "b65bd521a5d8e456951276c5f68b85d8efa02067"
+          }
+        },
+        {
+          "client_id": "567509991377-dgsfv6naqp7crmeugkpmqe69s3frmngg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weatherfreeapp",
+            "certificate_hash": "2c5d8fe97287a8d6bf0247d12051543356725139"
+          }
+        },
+        {
+          "client_id": "567509991377-i12iir7vimv3m6v6ks1gn4g5on10kbg0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-pjl3PaV2ucCxuXI1N6a6siRMWydO9XA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "567509991377-i12iir7vimv3m6v6ks1gn4g5on10kbg0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

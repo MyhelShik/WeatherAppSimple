@@ -219,6 +219,30 @@ class _WeatherScreenState extends State<WeatherScreen>
     return isDay ? 'assets/clear_day.json' : 'assets/clear_night.json';
   }
 
+  // Новый метод для отображения пользователя во всех стейтах
+  Widget _buildUserBadge() {
+    if (_user == null) return const SizedBox.shrink();
+    
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 24, height: 24,
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white24),
+            clipBehavior: Clip.antiAlias,
+            child: _user!.photoURL != null
+                ? Image.network(_user!.photoURL!, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 16, color: Colors.white))
+                : const Icon(Icons.person, size: 16, color: Colors.white),
+          ),
+          const SizedBox(width: 8),
+          Text('Logged in as ${_user!.displayName ?? 'User'}', style: const TextStyle(color: Colors.white54, fontSize: 13)),
+        ],
+      ),
+    );
+  }
+
   // ================= UI SECTION =================
   @override
   Widget build(BuildContext context) {
@@ -274,6 +298,7 @@ class _WeatherScreenState extends State<WeatherScreen>
                     ? _buildEmptyState()
                     : _buildMainContent(),
               ),
+              _buildUserBadge(),
             ],
           ),
         ),
@@ -409,6 +434,7 @@ class _WeatherScreenState extends State<WeatherScreen>
             const SizedBox(height: 30),
             HourlyForecastView(forecast: _forecast),
             WeatherGridDetails(weather: _currentWeather!),
+            // Оставили только кнопку входа для неавторизованных
             if (_user == null)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
@@ -416,25 +442,6 @@ class _WeatherScreenState extends State<WeatherScreen>
                   onPressed: _signInWithGoogle,
                   icon: const Icon(Icons.login, color: Colors.white70),
                   label: const Text('Sign in to sync & get more requests', style: TextStyle(color: Colors.white70, decoration: TextDecoration.underline, decorationColor: Colors.white70)),
-                ),
-              )
-            else
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 24, height: 24,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white24),
-                      clipBehavior: Clip.antiAlias,
-                      child: _user!.photoURL != null
-                          ? Image.network(_user!.photoURL!, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 16, color: Colors.white))
-                          : const Icon(Icons.person, size: 16, color: Colors.white),
-                    ),
-                    const SizedBox(width: 8),
-                    Text('Logged in as ${_user!.displayName ?? 'User'}', style: const TextStyle(color: Colors.white54, fontSize: 13)),
-                  ],
                 ),
               ),
             const SizedBox(height: 20),
