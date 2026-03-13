@@ -1,20 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../models.dart';
 
 class WeatherApi {
-  // Получаем ключ из .env файла
-  static String get _apiKey => dotenv.env['OPENWEATHER_API_KEY'] ?? '';
+  // адрес сервера Vercel
+  static const String _baseUrl = 'https://weather-app-simple-sable.vercel.app/api';
 
   // Функция поиска городов
   static Future<List<dynamic>> searchCities(String query) async {
     if (query.length < 3) return [];
 
     try {
-      final url = Uri.parse(
-        'https://api.openweathermap.org/geo/1.0/direct?q=$query&limit=8&appid=$_apiKey',
-      );
+      // search.js
+      final url = Uri.parse('$_baseUrl/search?query=$query');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -45,12 +43,9 @@ class WeatherApi {
   // Функция получения полной погоды и прогноза
   static Future<Map<String, dynamic>?> fetchFullWeather(String city) async {
     try {
-      final weatherUrl = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$_apiKey&units=metric',
-      );
-      final forecastUrl = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$_apiKey&units=metric',
-      );
+      // колл к файлам weather.js и forecast.js
+      final weatherUrl = Uri.parse('$_baseUrl/weather?city=$city');
+      final forecastUrl = Uri.parse('$_baseUrl/forecast?city=$city');
 
       final weatherRes = await http.get(weatherUrl);
       final forecastRes = await http.get(forecastUrl);
@@ -71,6 +66,6 @@ class WeatherApi {
     } catch (e) {
       print('Weather API Error: $e');
     }
-    return null; // Возвращаем null, если город не найден или ошибка
+    return null;
   }
 }

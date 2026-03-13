@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // Ядро Firebase
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 
 import 'weather_screen.dart';
 
 Future<void> main() async {
-  // Эта команда обязательна перед запуском Firebase
+  // Эта команда обязательна перед запуском Firebase!!!!!!!!
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Загружаем ключи OpenWeather (.env файл)
-  await dotenv.load(fileName: '.env');
+  // загрузка env файла с ключиками
+  // await dotenv.load(fileName: '.env');
 
   // --- ИНИЦИАЛИЗАЦИЯ FIREBASE ---
-  // Эта единственная строчка теперь идеально работает И для Web, И для Android!
+  // web + android
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
