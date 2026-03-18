@@ -9,7 +9,7 @@ A modern cross-platform application for checking weather conditions. Optimized f
 ## Project Links
 * [Open Web Version (Firebase Hosting)](https://weatherfreeapp.web.app/)
 * [Watch Video Demo](https://github.com/user-attachments/assets/968f297d-8e01-41fc-a16f-784a61672b7a)
-* [Download Android APK]([https://github.com/YOUR_USERNAME/YOUR_REPOSITORY/releases](https://github.com/MyhelShik/WeatherAppSimple/releases/tag/app))
+* [Download Android APK](https://github.com/MyhelShik/WeatherAppSimple/releases/tag/app)
 
 ## Key Features
 * **City Search:** Instant location search worldwide.
