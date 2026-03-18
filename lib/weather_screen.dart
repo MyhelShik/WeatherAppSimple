@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'models.dart';
 import 'weather_widgets.dart';
 
-// --- ИМПОРТЫ НАШИХ НОВЫХ СЕРВИСОВ ---
+// --- ИМПОРТЫ СЕРВИСОВ ---
 import 'services/weather_api.dart';
 import 'services/user_manager.dart';
 
@@ -77,7 +77,7 @@ class _WeatherScreenState extends State<WeatherScreen>
     String? error = await UserManager.signInWithGoogle();
     if (error != null && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ошибка: $error'), backgroundColor: Colors.red),
+        SnackBar(content: Text('Error: $error'), backgroundColor: Colors.red),
       );
     }
   }
@@ -87,15 +87,15 @@ class _WeatherScreenState extends State<WeatherScreen>
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: const Color(0xFF1F1C2C),
-        title: const Text('Закончились запросы', style: TextStyle(color: Colors.white)),
+        title: const Text('Out of requests!', style: TextStyle(color: Colors.white)),
         content: const Text(
-          'Бесплатные 5 поисков исчерпаны. Войдите через Google, чтобы получить еще 10 запросов!',
+          'Free daily limit reached!. Sign up with google to get more requests!',
           style: TextStyle(color: Colors.white70),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Отмена', style: TextStyle(color: Colors.white54)),
+            child: const Text('Cancel', style: TextStyle(color: Colors.white54)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
@@ -103,7 +103,7 @@ class _WeatherScreenState extends State<WeatherScreen>
               Navigator.pop(ctx);
               _signInWithGoogle();
             },
-            child: const Text('Войти через Google', style: TextStyle(color: Colors.black)),
+            child: const Text('Enter with google', style: TextStyle(color: Colors.black)),
           ),
         ],
       ),
@@ -115,7 +115,7 @@ class _WeatherScreenState extends State<WeatherScreen>
 
     _debounce = Timer(const Duration(milliseconds: 500), () async {
       setState(() => _isSearching = true);
-      // Вызываем наш сервис!
+      // Вызываем сервис
       final results = await WeatherApi.searchCities(query);
       setState(() {
         _citySuggestions = results;
@@ -132,7 +132,7 @@ class _WeatherScreenState extends State<WeatherScreen>
         _showLoginDialog();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Лимит запросов на сегодня исчерпан!')),
+          const SnackBar(content: Text('Daily limit reached!')),
         );
       }
       return; 
@@ -146,10 +146,10 @@ class _WeatherScreenState extends State<WeatherScreen>
     });
     FocusManager.instance.primaryFocus?.unfocus();
 
-    // Обновляем лимиты через наш сервис!
+    // Обновляем лимиты через сервис
     await UserManager.incrementLimit(_user, _searchesUsed);
 
-    // Загружаем погоду через наш сервис!
+    // Загружаем погоду через сервис
     final data = await WeatherApi.fetchFullWeather(city);
 
     if (data != null) {
@@ -434,7 +434,7 @@ class _WeatherScreenState extends State<WeatherScreen>
             const SizedBox(height: 30),
             HourlyForecastView(forecast: _forecast),
             WeatherGridDetails(weather: _currentWeather!),
-            // Оставили только кнопку входа для неавторизованных
+            // Оставил только кнопку входа для неавторизованных
             if (_user == null)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),

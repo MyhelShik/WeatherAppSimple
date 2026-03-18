@@ -25,13 +25,12 @@ class UserManager {
         final GoogleSignIn googleSignIn = GoogleSignIn.instance;
         
         await googleSignIn.initialize(
-          // ВСТАВЬ СВОЙ WEB CLIENT ID СЮДА:
             serverClientId: dotenv.env['CLIENT_ID_GOOGLE'] ?? '',
         );
         
         final GoogleSignInAccount? googleUser = await googleSignIn.authenticate();
         
-        if (googleUser == null) return 'Вход отменен пользователем';
+        if (googleUser == null) return 'Canceled by user';
 
         final GoogleSignInAuthentication googleAuth = googleUser.authentication;
         
@@ -68,8 +67,8 @@ class UserManager {
         return prefs.getInt('searchCount') ?? 0;
       }
     }
-    return 0; // Если ничего нет, возвращаем 0
-  }
+    return 0;
+    }
 
   static Future<void> incrementLimit(User? user, int currentSearches) async {
     String today = DateFormat('yyyy-MM-dd').format(DateTime.now());

@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'models.dart';
 
-// Обновленная функция: теперь понимает день и ночь
+// Обновленная функция: теперь показует день и ночь
 IconData getWeatherIcon(String iconCode) {
   bool isDay = iconCode.endsWith('d');
   
@@ -31,7 +31,7 @@ class WeatherGridDetails extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 2,
-        // ИЗМЕНЕНИЕ 1: Было 2.5, стало 1.8. Это сделает прямоугольники выше!
+        // ИЗМЕНЕНИЕ 1: Было 2.5, стало 1.8Pxs
         childAspectRatio: 1.8, 
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
@@ -51,20 +51,17 @@ class WeatherGridDetails extends StatelessWidget {
         color: Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(15),
       ),
-      // Добавим немного отступов внутри карточки, чтобы контент не лип к краям
       padding: const EdgeInsets.symmetric(horizontal: 10), 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: Colors.white70),
           const SizedBox(width: 10),
-          // ИЗМЕНЕНИЕ 2: Оборачиваем Column в Expanded, чтобы он не вылезал вправо
           Expanded( 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ИЗМЕНЕНИЕ 3: FittedBox заставит текст уменьшиться, если он слишком длинный
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
@@ -158,23 +155,17 @@ class FavoritesDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // 1. Делаем сам фон Drawer'а полностью прозрачным и убираем тень
       backgroundColor: Colors.transparent,
       elevation: 0,
       
-      // 2. Оборачиваем всё в BackdropFilter
       child: BackdropFilter(
-        // Настраиваем силу блюра (15 - это красивый эффект матового стекла)
         filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
         child: Container(
-          // 3. Добавляем еле заметную темную тонировку, 
-          // чтобы белый текст хорошо читался даже на фоне светлых дневных анимаций
           color: Colors.black.withOpacity(0.25),
           child: Column(
             children: [
               const DrawerHeader(
                 decoration: BoxDecoration(
-                  // Маленькая деталь: тонкая полупрозрачная полоска снизу хедера
                   border: Border(bottom: BorderSide(color: Colors.white10, width: 1)),
                 ),
                 child: Center(

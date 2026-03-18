@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Ядро Firebase
+import 'package:firebase_core/firebase_core.dart'; // Firebase core
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 
