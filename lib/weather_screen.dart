@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'models.dart';
 import 'weather_widgets.dart';
@@ -243,6 +245,40 @@ class _WeatherScreenState extends State<WeatherScreen>
     );
   }
 
+  Widget _buildFooter() {
+    Future<void> _launchUrl(String url) async {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0, top: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Created by MyhelShik', style: TextStyle(color: Colors.white54, fontSize: 12)),
+          const SizedBox(width: 12),
+          GestureDetector(
+            onTap: () => _launchUrl('https://github.com/MyhelShik'),
+            child: const FaIcon(FontAwesomeIcons.github, color: Colors.white54, size: 18),
+          ),
+          const SizedBox(width: 12),
+          GestureDetector(
+            onTap: () => _launchUrl('https://www.linkedin.com/in/oleksandr-zhogno-79a2732b7/'),
+            child: const FaIcon(FontAwesomeIcons.linkedin, color: Colors.white54, size: 18),
+          ),
+          const SizedBox(width: 12),
+          GestureDetector(
+            onTap: () => _launchUrl('https://portfolio-app-mrnd.web.app'),
+            child: const FaIcon(FontAwesomeIcons.globe, color: Colors.white54, size: 18),
+          ),
+        ],
+      ),
+    );
+  }
+
   // ================= UI SECTION =================
   @override
   Widget build(BuildContext context) {
@@ -299,6 +335,7 @@ class _WeatherScreenState extends State<WeatherScreen>
                     : _buildMainContent(),
               ),
               _buildUserBadge(),
+              _buildFooter(),
             ],
           ),
         ),

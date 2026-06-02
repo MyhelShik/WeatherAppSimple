@@ -1,57 +1,118 @@
-# WeatherApp (Secure Cross-Platform Weather Application)
+# WeatherApp Simple
 
-![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
-![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
-![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![OpenWeather](https://img.shields.io/badge/OpenWeather-EB6E4B?style=for-the-badge&logoColor=white)
+![Lottie](https://img.shields.io/badge/Lottie-00DDB3?style=for-the-badge&logoColor=white)
 
-A modern cross-platform application for checking weather conditions. Optimized for both web browsers and mobile devices.
+WeatherApp Simple is a cross-platform Flutter weather app with city search, current conditions, forecast data, animated weather states, saved favorite cities, Google authentication, and daily request limits.
 
-## Project Links
-* [Open Web Version (Firebase Hosting)](https://weatherfreeapp.web.app/)
-* [Watch Video Demo](https://github.com/user-attachments/assets/968f297d-8e01-41fc-a16f-784a61672b7a)
-* [Download Android APK](https://github.com/MyhelShik/WeatherAppSimple/releases/tag/app)
+The app does not call OpenWeather directly from the client. Instead, it uses a small Vercel API proxy so the OpenWeather key stays on the server.
 
-## Key Features
-* **City Search:** Instant location search worldwide.
-* **Current Weather:** Accurate real-time data on temperature, wind speed, and humidity based on OpenWeatherMap.
-* **Forecast:** Detailed weather forecast for upcoming hours and days.
-* **Responsive Design:** The interface smoothly adapts to desktop browser and smartphone screens.
-* **Pretty design:** The interface is interesting, smooth, fluid and clean. Providing beautiful changing of gradient colors when switching from day to night or back and forth. 
+Web version: [weatherfreeapp.web.app](https://weatherfreeapp.web.app/)  
+Video demo: [GitHub user attachment](https://github.com/user-attachments/assets/968f297d-8e01-41fc-a16f-784a61672b7a)  
+APK release: [GitHub Releases](https://github.com/MyhelShik/WeatherAppSimple/releases)
 
-## Architecture and Security (Serverless Proxy)
+## What It Does
 
-The standout feature of this project is its **API key protection**. 
+- Searches cities through a server-side OpenWeather geocoding proxy.
+- Shows current weather with temperature, condition, humidity, wind, and related details.
+- Loads forecast data from a Vercel API endpoint.
+- Uses Lottie animations to make weather states feel more alive.
+- Lets users save favorite cities locally.
+- Supports Google sign-in with Firebase Auth.
+- Applies daily search limits for guests and signed-in users.
+- Stores authenticated-user usage counters in Firestore.
+- Stores guest counters and favorites with `shared_preferences`.
 
-Instead of exposing sensitive API keys within the client-side code, this project secures them through a dedicated serverless proxy architecture:
+## How It Works
 
-1. **Frontend (Flutter Web):** Deployed on ultra-fast **Firebase Hosting**. The client application contains absolutely no secret data or API keys.
-2. **Backend (Vercel Serverless Functions):** Written in Node.js. Acts as a secure middleware bridge.
-3. **Provider (OpenWeather API):** Vercel receives requests from the frontend, securely injects the hidden environment API key, and fetches the weather data from OpenWeatherMap.
+```text
+Flutter app
+   |
+   v
+Vercel API proxy
+   |
+   v
+OpenWeather API
 
-*Result: Complete protection against API key compromise and unauthorized billing usage.*
+Firebase Auth + Firestore
+   |
+   +-- Google sign-in
+   +-- Authenticated-user daily limits
 
-## Stack
-* **Frontend:** Dart, Flutter
-* **Backend:** JavaScript, Node.js, Vercel Serverless (located in the /api folder)
-* **Hosting:** Firebase Hosting (Web)
-* **API:** OpenWeatherMap (Geocoding API, Current Weather API, Forecast API)
+SharedPreferences
+   |
+   +-- Guest daily limits
+   +-- Favorite cities
+```
 
-## How to Run Locally?
+## Tech Stack
 
-*(assuming that the user has pre-installed flutter on local machine already)*
+- **Flutter** and **Dart** for the mobile/web client.
+- **Firebase Auth** for Google authentication.
+- **Cloud Firestore** for signed-in user request counters.
+- **Vercel serverless functions** for OpenWeather proxy endpoints.
+- **OpenWeather API** for weather, forecast, and city search data.
+- **SharedPreferences** for local guest state and favorites.
+- **Lottie** for animated weather visuals.
+- **HTTP** package for API calls.
 
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/MyhelShik/WeatherAppSimple.git](https://github.com/MyhelShik/WeatherAppSimple.git)
-   ```
-   
-2. Install Flutter dependencies:
-   ```bash
-   flutter pub get
-   ```
-   
-3. Run the project:
-   ```bash
-   flutter run -d chrome
-   ```
-   
+## API Proxy
+
+The Flutter client calls:
+
+```text
+https://weather-app-simple-sable.vercel.app/api
+```
+
+The proxy exposes three main endpoints:
+
+```text
+/api/search?query=city
+/api/weather?city=city
+/api/forecast?city=city
+```
+
+The OpenWeather key is stored as a Vercel environment variable:
+
+```env
+OPENWEATHER_API_KEY=your_openweather_key
+```
+
+This keeps the API key out of the Flutter app and makes the deployed client safer to share.
+
+## Running Locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/MyhelShik/WeatherAppSimple.git
+cd WeatherAppSimple
+```
+
+Install Flutter dependencies:
+
+```bash
+flutter pub get
+```
+
+Configure Firebase for the platforms you want to run. The project uses `firebase_options.dart`, so Firebase should be configured with FlutterFire.
+
+For native Google sign-in, provide the Google client ID expected by the app:
+
+```env
+CLIENT_ID_GOOGLE=your_google_client_id
+```
+
+Run the app:
+
+```bash
+flutter run
+```
+
+## Notes
+
+This project focuses on a small but complete product flow: searching weather data, protecting API keys, handling authenticated and guest users differently, saving local preferences, and presenting the result with a clean animated Flutter interface.

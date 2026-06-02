@@ -1,1 +1,39 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"weatherfreeapp","appId":"1:567509991377:android:469719597ad3d0d0a06af0","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"weatherfreeapp","configurations":{"android":"1:567509991377:android:469719597ad3d0d0a06af0","ios":"1:567509991377:ios:84fb7761bcb321dca06af0","macos":"1:567509991377:ios:84fb7761bcb321dca06af0","web":"1:567509991377:web:554c99934e0d1c66a06af0","windows":"1:567509991377:web:224e8654f5d50bb2a06af0"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "weatherfreeapp",
+          "appId": "1:567509991377:android:469719597ad3d0d0a06af0",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "weatherfreeapp",
+          "configurations": {
+            "android": "1:567509991377:android:469719597ad3d0d0a06af0",
+            "ios": "1:567509991377:ios:84fb7761bcb321dca06af0",
+            "macos": "1:567509991377:ios:84fb7761bcb321dca06af0",
+            "web": "1:567509991377:web:554c99934e0d1c66a06af0",
+            "windows": "1:567509991377:web:224e8654f5d50bb2a06af0"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
